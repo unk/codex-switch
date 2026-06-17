@@ -12,7 +12,7 @@ export interface ProfileSettingsSpec {
   custom: boolean;
   baseUrl?: string;
   authMethod?: AuthMethod;
-  /** Wire protocol for the custom provider. Defaults to 'chat'. */
+  /** Wire protocol for the custom provider. Defaults to 'responses'. */
   wireApi?: WireApi;
   /** Secret value. Only written to the profile's .env file. */
   secret?: string;
@@ -105,7 +105,7 @@ export function buildConfigToml(spec: ProfileSettingsSpec): string {
     lines.push(`[model_providers.${tomlKeyPath(providerId)}]`);
     lines.push(`name = ${tomlString(providerId)}`);
     lines.push(`base_url = ${tomlString(spec.baseUrl)}`);
-    lines.push(`wire_api = ${tomlString(spec.wireApi ?? 'chat')}`);
+    lines.push(`wire_api = ${tomlString(spec.wireApi ?? 'responses')}`);
 
     if (authMethod === 'envKey') {
       if (!spec.envVar) throw new Error('env_key authentication requires an env var name.');

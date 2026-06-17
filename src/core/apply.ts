@@ -25,7 +25,7 @@ export interface CreateSpec {
   custom: boolean;
   baseUrl?: string;
   authMethod?: AuthMethod;
-  /** Wire protocol for the custom provider. Defaults to 'chat'. */
+  /** Wire protocol for the custom provider. Defaults to 'responses'. */
   wireApi?: WireApi;
   /** Secret value. Written to .env only. */
   secret?: string;
@@ -60,7 +60,7 @@ export function applyProfile(spec: CreateSpec): ApplyResult {
   const codexHome = codexHomeFor(spec.alias);
   ensureDir(codexHome, 0o700);
   const authMethod = spec.custom ? (spec.authMethod ?? 'envKey') : spec.authMethod;
-  const wireApi = spec.custom ? (spec.wireApi ?? 'chat') : undefined;
+  const wireApi = spec.custom ? (spec.wireApi ?? 'responses') : undefined;
 
   const profileFiles = writeProfileSettings(spec.alias, {
     custom: spec.custom,

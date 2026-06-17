@@ -47,7 +47,7 @@ describe('applyProfile (end-to-end)', () => {
     expect(fs.existsSync(path.join(tmp, '.codex-switch', 'codex-glm'))).toBe(true);
     const config = fs.readFileSync(res.configPath, 'utf8');
     expect(config).toContain('model_provider = "codex_glm"');
-    expect(config).toContain('wire_api = "chat"');
+    expect(config).toContain('wire_api = "responses"');
     expect(config).toContain('env_key = "CODEX_SWITCH_CODEX_GLM_API_KEY"');
     expect(config).toContain('model = "glm-5.1"');
     expect(config).toContain('approval_policy = "on-request"');
@@ -64,7 +64,7 @@ describe('applyProfile (end-to-end)', () => {
     expect(fs.statSync(scriptPath).mode & 0o777).toBe(0o755);
 
     const stored0 = getProfile('codex-glm');
-    expect(stored0?.wireApi).toBe('chat');
+    expect(stored0?.wireApi).toBe('responses');
 
     const stored = getProfile('codex-glm');
     expect(stored?.baseUrl).toBe('https://api.example.com/v1');

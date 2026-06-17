@@ -139,10 +139,18 @@ export async function runCreate(): Promise<number> {
     wireApi = ensure(
       await p.select({
         message: 'Wire protocol',
-        initialValue: 'chat' as WireApi,
+        initialValue: 'responses' as WireApi,
         options: [
-          { value: 'chat', label: 'Chat Completions', hint: 'OpenRouter, Groq, Together, …' },
-          { value: 'responses', label: 'Responses', hint: 'OpenAI-native / Responses gateways' },
+          {
+            value: 'responses',
+            label: 'Responses',
+            hint: 'required by current Codex; OpenRouter, OpenAI-native, …',
+          },
+          {
+            value: 'chat',
+            label: 'Chat Completions',
+            hint: 'legacy — rejected by current Codex CLI',
+          },
         ],
       }),
     ) as WireApi;

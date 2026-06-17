@@ -50,7 +50,7 @@ describe('buildConfigToml', () => {
     expect(toml).toContain('sandbox_mode = "workspace-write"');
   });
 
-  it('builds a custom provider using env_key auth and defaults to chat wire_api', () => {
+  it('builds a custom provider using env_key auth and defaults to responses wire_api', () => {
     const toml = buildConfigToml({
       custom: true,
       baseUrl: 'https://openrouter.ai/api/v1',
@@ -63,7 +63,7 @@ describe('buildConfigToml', () => {
     expect(toml).toContain('model_provider = "codex_or"');
     expect(toml).toContain('[model_providers.codex_or]');
     expect(toml).toContain('base_url = "https://openrouter.ai/api/v1"');
-    expect(toml).toContain('wire_api = "chat"');
+    expect(toml).toContain('wire_api = "responses"');
     expect(toml).toContain('env_key = "CODEX_SWITCH_CODEX_OR_API_KEY"');
   });
 

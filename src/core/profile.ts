@@ -44,7 +44,7 @@ export interface Profile {
   baseUrl?: string;
   /** How the gateway authenticates (custom only). */
   authMethod?: AuthMethod;
-  /** Wire protocol for the custom provider (custom only). Defaults to 'chat'. */
+  /** Wire protocol for the custom provider (custom only). Defaults to 'responses'. */
   wireApi?: WireApi;
   /** Codex model provider id written to config.toml (custom only). */
   providerId?: string;
