@@ -160,6 +160,7 @@ export async function runCreate(): Promise<number> {
       await p.text({
         message: 'Default model (optional, Enter to skip)',
         placeholder: 'anthropic/claude-sonnet-4.5',
+        defaultValue: '',
       }),
     ).trim();
     model = m || undefined;
@@ -175,6 +176,7 @@ export async function runCreate(): Promise<number> {
         await p.text({
           message: 'Default model',
           placeholder: 'gpt-5.5',
+          defaultValue: '',
         }),
       ).trim();
       model = m || undefined;

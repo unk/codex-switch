@@ -1,6 +1,6 @@
 {
   "name": "@naram/codex-switch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Interactive CLI to set up isolated Codex profiles (multiple accounts / custom model providers) with one command.",
   "keywords": [
     "codex",
