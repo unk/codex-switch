@@ -101,6 +101,18 @@ export function buildConfigToml(spec: ProfileSettingsSpec): string {
     const authMethod = spec.authMethod ?? 'envKey';
     const providerId = spec.providerId ?? providerIdForAlias('profile');
     lines.push(`model_provider = ${tomlString(providerId)}`);
+
+    // Codex 0.140+ injects a `multi_agent` sub-agent tool group (a Responses
+    // tool of `type = "namespace"`). Non-OpenAI Responses gateways such as
+    // OpenRouter reject the unknown variant with HTTP 422 ("unknown variant
+    // `namespace`"), which breaks the first turn. Disable it for custom
+    // providers. Must stay above the [model_providers.*] table so the bare
+    // keys below are not absorbed into [features].
+    lines.push('');
+    lines.push('[features]');
+    lines.push('multi_agent = false');
+    lines.push('multi_agent_v2 = false');
+
     lines.push('');
     lines.push(`[model_providers.${tomlKeyPath(providerId)}]`);
     lines.push(`name = ${tomlString(providerId)}`);

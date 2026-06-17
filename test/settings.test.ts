@@ -67,6 +67,30 @@ describe('buildConfigToml', () => {
     expect(toml).toContain('env_key = "CODEX_SWITCH_CODEX_OR_API_KEY"');
   });
 
+  it('disables the multi_agent namespace tool for custom providers (OpenRouter 422 fix)', () => {
+    const toml = buildConfigToml({
+      custom: true,
+      baseUrl: 'https://openrouter.ai/api/v1',
+      authMethod: 'envKey',
+      providerId: 'codex_grok',
+      envVar: 'CODEX_SWITCH_CODEX_GROK_API_KEY',
+      model: 'x-ai/grok-build-0.1',
+    });
+    expect(toml).toContain('[features]');
+    expect(toml).toContain('multi_agent = false');
+    expect(toml).toContain('multi_agent_v2 = false');
+    // The top-level `model_provider` scalar must precede the [features] table,
+    // and [features] must precede [model_providers.*], or TOML parsing breaks.
+    expect(toml.indexOf('model_provider =')).toBeLessThan(toml.indexOf('[features]'));
+    expect(toml.indexOf('[features]')).toBeLessThan(toml.indexOf('[model_providers.codex_grok]'));
+  });
+
+  it('does not write a [features] table for standard (non-custom) profiles', () => {
+    const toml = buildConfigToml({ custom: false, model: 'gpt-5.5' });
+    expect(toml).not.toContain('[features]');
+    expect(toml).not.toContain('multi_agent');
+  });
+
   it('honors an explicit responses wire_api', () => {
     const toml = buildConfigToml({
       custom: true,
